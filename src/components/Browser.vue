@@ -165,7 +165,8 @@ export default {
 
       // add ../ at the start of the dir listing, unless we are already at root dir
       // if (prefix && prefix !== this.S3B_ROOT_DIR) {
-      if (this.S3B_ROOT_DIR !== "") {
+      let count = (this.S3B_ROOT_DIR.match(/\//g) || []).length;
+      if (count > 1) {
         var up = prefix
             .replace(/\/$/, "")
             .replace(/"/g, "&quot;")
@@ -270,6 +271,10 @@ export default {
     }
   },
   mounted() {
+    let uri = window.location.search.substring(1); 
+    let params = new URLSearchParams(uri);
+    let form_id = params.get("id") === undefined ? '' : params.get("id");
+    this.S3B_ROOT_DIR = form_id;
     this.getS3Data();
   }
 };

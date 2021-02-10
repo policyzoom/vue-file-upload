@@ -5,7 +5,6 @@ export default {
   getSignedURL (file) {
     let uri = window.location.search.substring(1); 
     let params = new URLSearchParams(uri);
-    console.log(params.get("id"));
     let form_id = params.get("id") === null ? '' : params.get("id");
     let endpoint = config.AWS_LAMBDA_GETSIGNEDURL_ENDPOINT
 
