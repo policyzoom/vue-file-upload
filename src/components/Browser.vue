@@ -9,7 +9,10 @@
         <tr v-for="item in S3DATA_LIST" :key="item.Key">
           <td>{{item.LastModified}}</td>
           <td>{{item.Size}}</td>
-          <td><a class="link" @click.prevent="loadDataFromS3(item)">{{item.keyText}}</a></td>
+          <td>
+            <a class="link" @click.prevent="loadDataFromS3(item)">{{item.keyText}}</a>
+            <!-- <a :download="item.keyText" v-else class="link" :href="BUCKET_URL + item.Key">{{item.keyText}}</a> -->
+          </td>
         </tr>
     </table>
     <!-- <div v-html="html">
@@ -20,6 +23,7 @@
 import { bucket_url } from "../../s3_config.json";
 import Vue from "vue";
 import $ from "jquery";
+import { saveAs } from 'file-saver';
 export default {
   name: "browser",
   data() {
@@ -34,10 +38,29 @@ export default {
     };
   },
   methods: {
-    loadDataFromS3(item) {
+    async loadDataFromS3(item) {
       if (item.Type !== "file") {
         this.S3B_ROOT_DIR = item.Key;
         this.getS3Data();
+      } else {
+        const fileURL = this.BUCKET_URL + item.Key;
+        //using axios
+        Vue.axios({
+          url: fileURL,
+          method: 'GET',
+          responseType: 'blob',
+        })
+        .then((response) => {
+          var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+          var fileLink = document.createElement('a');
+
+          fileLink.href = fileURL;
+          fileLink.setAttribute('download', item.keyText);
+          document.body.appendChild(fileLink);
+
+          fileLink.click();
+        });
+        // saveAs(fileURL, item.keyText);
       }
     },
     bytesToHumanReadable(sizeInBytes) {

@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import axios from './plugins/axios';
+import cookie from './plugins/cookie';
 import { Auth0Plugin } from "./auth";
 import hljs from "highlight.js/lib/core";
 import "highlight.js/styles/github.css";
@@ -33,5 +34,6 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 new Vue({
   router,
   axios,
+  cookie,
   render: h => h(App)
 }).$mount("#app");

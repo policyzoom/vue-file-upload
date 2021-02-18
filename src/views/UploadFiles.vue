@@ -22,8 +22,10 @@ export default {
   },
   async created(){
       const claims = await this.$auth.getIdTokenClaims();
+      if(claims === undefined) return;
       const id_token = claims.__raw;
-      localStorage.setItem("id_token", id_token);
+      if (!this.$cookies.isKey("token"))
+        this.$cookies.set("token",id_token,"30MIN","/upload");  
   }
 }
 </script>
