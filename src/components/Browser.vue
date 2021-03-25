@@ -23,7 +23,6 @@
 import { bucket_url } from "../../s3_config.json";
 import Vue from "vue";
 import $ from "jquery";
-import { saveAs } from 'file-saver';
 export default {
   name: "browser",
   data() {
