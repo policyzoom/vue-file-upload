@@ -1,5 +1,5 @@
 {
-    "bucket_name": "vue-app-files-store",
+    "bucket_name": "close-crm-files",
     "s3_region": "s3",
-    "bucket_url": "https://vue-app-files-store.s3.amazonaws.com/"
+    "bucket_url": "https://close-crm-files.s3.us-east-2.amazonaws.com/"
 }
